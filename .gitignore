@@ -1,0 +1,11 @@
+*.pyc
+/*.eggs/
+/venv/
+**/.vscode
+.idea/
+.pytest_cache/
+.mypy_cache/
+.coverage
+.ropeproject/
+Session.vim
+.last_check_sum

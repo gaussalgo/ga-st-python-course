@@ -1,0 +1,8 @@
+pydantic
+logging_tree
+pyyaml
+graypy
+requests
+sentry-sdk
+flask
+importlib-metadata

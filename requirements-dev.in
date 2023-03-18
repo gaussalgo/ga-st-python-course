@@ -1,0 +1,12 @@
+black
+flake8
+mypy
+isort
+pip-tools
+pre-commit
+pytest
+pytest-cov
+ipython
+types-PyYAML
+types-requests
+ipdb

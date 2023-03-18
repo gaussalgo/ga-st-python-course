@@ -1,0 +1,57 @@
+formatters:
+    MultiLineFormatter:
+        '()': gauss.MultiLineFormatter
+        format: '%(asctime)s.%(msecs).03d %(process)+5s %(levelname)-8s %(filename)s:%(lineno)d:%(funcName)s(): %(message)s'
+        datefmt: '%Y-%m-%d %H:%M:%S'
+
+filters:
+    FilterNotD:
+        '()': gauss.NotLevelFilter
+        levels: [DEBUG]
+    FilterWIC:
+        '()': gauss.LevelFilter
+        levels: [WARNING, INFO, CRITICAL]
+    FilterNotWIC:
+        '()': gauss.NotLevelFilter
+        levels: [WARNING, INFO, CRITICAL]
+    FilterWEC:
+        '()': gauss.LevelFilter
+        levels: [WARNING, ERROR, CRITICAL]
+
+handlers:
+    file:
+        class: logging.FileHandler
+        formatter: MultiLineFormatter
+        mode: a
+        filename: /tmp/logger
+    consoleAll:
+        class: logging.StreamHandler
+        formatter: MultiLineFormatter
+        stream: ext://sys.stderr
+    consoleErrors:
+        filters: ['FilterWEC']
+        class: logging.StreamHandler
+        formatter: MultiLineFormatter
+        stream: ext://sys.stderr
+    consoleNotDebug:
+        filters: ['FilterNotD']
+        class: logging.StreamHandler
+        formatter: MultiLineFormatter
+        stream: ext://sys.stderr
+    graylog:
+        formatter: MultiLineFormatter
+        class: graypy.GELFHTTPHandler
+        host: graylog.gaussalgo.com
+        port: 12201
+
+
+loggers:
+    test:
+        level: DEBUG
+        handlers: [consoleAll]
+        propagate: False
+    production:
+        level: INFO
+        handlers: [consoleAll, graylog]
+        propagate: false
+
