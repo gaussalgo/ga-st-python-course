@@ -1,0 +1,2 @@
+**/secrets/** filter=git-crypt diff=git-crypt
+tools/graylog/.env filter=git-crypt diff=git-crypt

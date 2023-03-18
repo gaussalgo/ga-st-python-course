@@ -1,0 +1,37 @@
+
+stages:
+    - test
+
+.test:
+  image: python:3
+  stage: test
+  cache:
+    key: python
+    paths:
+      - .pip-cache
+  before_script:
+    - pip install -U pip setuptools wheel
+    - pip install --upgrade -r requirements.txt -r requirements-dev.txt
+
+
+run_tests:
+  extends: .test
+  script:
+    - make pytest
+  coverage: '/^TOTAL\s+.*\s+(\d+\%)\s*$/'
+
+
+run_mypy:
+  extends: .test
+  script:
+    - make mypy
+
+run_flake8:
+  extends: .test
+  script:
+    - make flake8
+
+run_black:
+  extends: .test
+  script:
+    - make black-check
